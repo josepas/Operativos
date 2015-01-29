@@ -32,7 +32,9 @@ int main(int argc, char const *argv[]) {
 	} else if (argv[1][1] == 'd') {
 	    
 	    while ( (c = fgetc(archE)) != EOF ) {
-	       	fprintf(archS, "%c", DesEnCesar( DesEnMurcielago(c) ) );
+	    	if (c != '\n') {
+	       		fprintf(archS, "%c", DesEnCesar( DesEnMurcielago(c) ) );
+	    	}
 	    }
 	}
 		
