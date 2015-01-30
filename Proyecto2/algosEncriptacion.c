@@ -45,3 +45,22 @@ char EncrptMurcielago(char nuevo) {
 	}
 	return nuevo;
 }
+
+void EncBloqueCesar(int inicio, int nc, pid_t pid, FILE* entrada) {
+	FILE* salida;
+	char aux[20];
+	char* t = ".txt";
+
+	sprintf(aux, "%d" ,pid);
+	strcat (aux, t);
+	salida = fopen(aux, "w");
+
+	fseek(entrada, inicio, SEEK_SET);
+	printf("epale papito\n");
+
+	int i;
+	for (i=0; i < nc; ++i) {
+		fprintf(salida, "%c\n", fgetc(entrada) );
+	}
+
+}
