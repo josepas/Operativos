@@ -56,11 +56,10 @@ void EncBloqueCesar(int inicio, int nc, pid_t pid, FILE* entrada) {
 	salida = fopen(aux, "w");
 
 	fseek(entrada, inicio, SEEK_SET);
-	printf("epale papito\n");
 
 	int i;
 	for (i=0; i < nc; ++i) {
-		fprintf(salida, "%c\n", fgetc(entrada) );
+		fprintf(salida, "%c\n", EncrptCesar(fgetc(entrada)));
 	}
 
 }
