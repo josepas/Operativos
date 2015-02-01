@@ -1,6 +1,7 @@
 #include "algosEncriptacion.h"
 #include "algosDesencriptacion.h"
 
+
 int main(int argc, char const *argv[]) {
 	
 	FILE* archE;

@@ -49,17 +49,20 @@ char EncrptMurcielago(char nuevo) {
 void EncBloqueCesar(int inicio, int nc, pid_t pid, FILE* entrada) {
 	FILE* salida;
 	char aux[20];
-	char* t = ".txt";
 
-	sprintf(aux, "%d" ,pid);
-	strcat (aux, t);
+	sprintf(aux, "%d.txt" ,pid);
+
 	salida = fopen(aux, "w");
 
 	fseek(entrada, inicio, SEEK_SET);
 
 	int i;
 	for (i=0; i < nc; ++i) {
-		fprintf(salida, "%c\n", EncrptCesar(fgetc(entrada)));
+		fprintf(salida, "%c", EncrptCesar(fgetc(entrada)));
 	}
+	fprintf(salida, "\n");
+	fclose(salida);
+
+
 
 }

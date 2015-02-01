@@ -1,36 +1,15 @@
-
 #include "algosEncriptacion.h"
 #include "algosDesencriptacion.h"
-
-long* rangos(long tamano, long nHijos) {
-	
-	long* r;
-	long trabajo = tamano / nHijos;
-	long resto = tamano % nHijos;
-
-	r = (long*) malloc ( (long)sizeof(long) * nHijos);
-
-	int i;
-	for (i=0; i<nHijos; i++) { 
-		r[i] = trabajo;
-		if (resto > 0) {
-			r[i]++;
-			resto--;
-		}
-	}
-
-	return r;
-
-}
+#include "extras.h"
 
 int main(int argc, char const *argv[]) {
 
 	FILE* archE;
 	FILE* archS;
-	FILE* archAux;
-
-	int i;
-	int j;
+	FILE* archAuxE;
+	FILE* archAuxS;	
+	
+	int i, j, c;
 
 	long nHijos;
 	long* ra;		//Numero de caracteres a procesar por hijo;
@@ -40,7 +19,6 @@ int main(int argc, char const *argv[]) {
 	int estado;
 	pid_t* hijosH;
 	pid_t* hijosI;
-
 
 	pid_t pidI, pidH;
 
@@ -59,6 +37,7 @@ int main(int argc, char const *argv[]) {
 	archS = fopen(argv[4], "w");
 
 	nHijos = atoi(argv[2]);
+
 	hijosH = (pid_t *)malloc(sizeof(pid_t)*nHijos);
 	hijosI = (pid_t *)malloc(sizeof(pid_t)*nHijos);
 
@@ -79,36 +58,56 @@ int main(int argc, char const *argv[]) {
 				pidH = fork();
 				if (pidH == 0) {
 					EncBloqueCesar(inicio1, ra1[j], getpid(), archE);
+
+					free(hijosH);
+					free(hijosI);
+
+					free(ra);
+					free(ra1);
+
+					fclose(archE);
+					fclose(archS);
+
 					exit(0);
 					
 				} else {
-					printf("%i -------- orden real\n", pidH );
 					hijosH[j] = pidH;
 					inicio1 += ra1[j];
 				
 				}
 
 			}
-			inicio1 = inicio;
+			
+			char aux[20];
+			char aux1[20];
+			
+			sprintf(aux, "%d.txt" ,getpid() );
+			
+			archAuxS = fopen( aux, "a");
 
 			for (j=0; j<nHijos; j++) {
 				
-				char* t = ".txt";
-				char aux[20];
-				sprintf( aux, "%d" ,getpid() );
-				strcat(aux, t);
+				waitpid(hijosH[j], &estado, 0);					
+				sprintf(aux1, "%d.txt", hijosH[j]);
+								
+				archAuxE = fopen( aux1, "r");
+			
+				while ( (c = fgetc(archAuxE)) != EOF ) {
+	    			if (c != '\n') {
+	       				fprintf(archAuxS, "%c", EncrptMurcielago(c));
+	    			}
+	    		}
+	    	}
 
-				archAux = fopen( aux, "a");
-				printf("%ld\n", inicio1 );
-				printf("%i\n", hijosH[j]);
-				waitpid(hijosH[j], &estado, 1);
-				inicio1 += ra1[j];
+			fclose(archAuxE);
+			fclose(archAuxS);
 
+			free(hijosH);
+			free(hijosI);
 
+			free(ra);
+			free(ra1);
 
-
-
-			}
 			exit (0);
 
 		} else {
@@ -119,11 +118,25 @@ int main(int argc, char const *argv[]) {
 		
 	}
 	for (i=0;i<nHijos; i++) {
-		printf("%i------------ main\n", hijosI[i]);
-		waitpid(hijosI[i], &estado, 1);
+		char aux2[20];
+		waitpid(hijosI[i], &estado, 0);
+		sprintf(aux2, "%d.txt", hijosI[i]);
+
+		archAuxE = fopen(aux2, "r");
+		
+		while ( (c = fgetc(archAuxE)) != EOF ) {
+			if (c != '\n') {
+   				fprintf(archS, "%c", c);
+			}
+		}
+		fclose(archAuxE);
+
 	}
 
+	free(ra);
 
+	free(hijosH);
+	free(hijosI);
 
 	fclose(archS);
 	fclose(archE);
