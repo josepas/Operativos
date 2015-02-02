@@ -8,7 +8,6 @@ all: algosDesencriptacion.o algosEncriptacion.o extras.o cript.o cript_p.o cript
 	$(CC) $(CFLAGS) cript.o algosEncriptacion.o algosDesencriptacion.o -o $(EXEC1)
 	$(CC) $(CFLAGS) cript_p.o algosEncriptacion.o algosDesencriptacion.o extras.o -o $(EXEC2)
 	$(CC) $(CFLAGS) -pthread cript_t.o algosEncriptacion.o algosDesencriptacion.o extras.o -o $(EXEC3)
-	rm *.txt
 
 cript_t.o: cript_t.c
 	$(CC) $(CFLAGS) -c cript_t.c
