@@ -12,6 +12,7 @@
 struct datosHiloI {
 	char entrada[25];
 	char salida[25];
+	char* resultado;
 	int hiloId;
 	int nHijosH;
 	int nc;
@@ -20,6 +21,7 @@ struct datosHiloI {
 };
 
 struct datosHiloH {
+	char* resultado;
 	char entrada[25];
 	int hiloId;
 	long inicio;

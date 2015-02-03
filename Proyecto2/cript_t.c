@@ -4,11 +4,13 @@ int main(int argc, char const *argv[]) {
 	
 	FILE* archE;
 	FILE* archS;
+
+	char* resultado;
 	
 	pthread_t* hilosI;
 	struct datosHiloI* arregloDatosI;
 	int i;
-	
+	int c;
 	long nHijos;
 	long inicio;
 	long* ra;		//Numero de caracteres a procesar por hijo;
@@ -37,13 +39,22 @@ int main(int argc, char const *argv[]) {
 	long tamano = ftell(archE) - 1;
 	rewind(archE);
 
+	resultado = (char *)malloc(tamano);
+	i = 0;
+	while ( (c = fgetc(archE)) != EOF ) {
+		if (c != '\n') {
+			resultado[i] = c;
+		}
+		i++;
+	}
+
+	fclose(archE);
 	ra = rangos(tamano, nHijos);
 
 	inicio = 0;
 	for (i = 0; i < nHijos; i++) {
 		arregloDatosI[i].hiloId = i;
-		strcpy(arregloDatosI[i].entrada, argv[3]);
-		strcpy(arregloDatosI[i].salida, argv[4]);
+		arregloDatosI[i].resultado = resultado;
 		arregloDatosI[i].nc = ra[i];
 		arregloDatosI[i].nHijosH = nHijos;
 		arregloDatosI[i].inicio = inicio;
@@ -51,8 +62,15 @@ int main(int argc, char const *argv[]) {
 		inicio += ra[i];
 	}
 
-	
-	fclose(archE);
-	fclose(archS);
+	for (i = 0; i < nHijos; i++) {
+		pthread_join(hilosI[i], NULL);
+	}	
+
+
+	for (i = 0; i < tamano; i++) {
+		printf("%c", resultado[i]);
+	}
+	printf("\n");
+
 	pthread_exit(NULL);
 }
