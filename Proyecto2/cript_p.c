@@ -1,22 +1,18 @@
 #include "algosEncriptacion.h"
-#include "algosDesencriptacion.h"
-#include "extras.h"
+#include <sys/time.h>
 
 int main(int argc, char const *argv[]) {
 
 	FILE* archE;
 	FILE* archS;
-	FILE* archAuxE;
-	FILE* archAuxS;	
-	
-	int i, j, c;
+	char entrada[25];
 
+	int i, j;
 	long nHijos;
-	long* ra;		//Numero de caracteres a procesar por hijo;
-	long* ra1;
+	long* ncI;				//Numero de caracteres a procesar por hijoI;
+	long* ncH;				//Numero de caracteres a procesar por hijoH;
 	long inicio, inicio1;
 
-	int estado;
 	pid_t* hijosH;
 	pid_t* hijosI;
 
@@ -33,112 +29,65 @@ int main(int argc, char const *argv[]) {
 		printf("El archivo %s no existe\n", argv[3]);
 		return 0;
 	}
-
-	archS = fopen(argv[4], "w");
-
-	nHijos = atoi(argv[2]);
-
-	hijosH = (pid_t *)malloc(sizeof(pid_t)*nHijos);
-	hijosI = (pid_t *)malloc(sizeof(pid_t)*nHijos);
-
 	fseek(archE, 0, SEEK_END);
 	long tamano = ftell(archE) - 1;
+	fclose(archE);
 
-	ra = rangos(tamano, nHijos);
-
+	nHijos = atoi(argv[2]);
+	hijosH = (pid_t *)malloc(sizeof(pid_t)*nHijos);
+	hijosI = (pid_t *)malloc(sizeof(pid_t)*nHijos);
+	
+	strcpy(entrada, argv[3]);
+	
+	ncI = rangos(tamano, nHijos);
 	inicio = 0;
 	inicio1 = 0;
 	for (i=0; i<nHijos; i++) {
 		pidI = fork();
 		if (pidI == 0) {
 			
-			ra1 = rangos(ra[i], nHijos);
+			ncH = rangos(ncI[i], nHijos);
 			inicio1 = inicio;
 			for (j=0; j<nHijos; j++) {
 				pidH = fork();
 				if (pidH == 0) {
-					EncBloqueCesar(inicio1, ra1[j], getpid(), archE);
 
+					ProcesoHoja(inicio1, ncH[j], getpid(), entrada, argv[1][1]);
 					free(hijosH);
 					free(hijosI);
-
-					free(ra);
-					free(ra1);
-
-					fclose(archE);
-					fclose(archS);
+					free(ncI);
+					free(ncH);
 
 					exit(0);
 					
 				} else {
 					hijosH[j] = pidH;
-					inicio1 += ra1[j];
-				
+					inicio1 += ncH[j];
 				}
-
 			}
 			
-			char aux[20];
-			char aux1[20];
-			
-			sprintf(aux, "%d.txt" ,getpid() );
-			
-			archAuxS = fopen( aux, "a");
-
-			for (j=0; j<nHijos; j++) {
-				
-				waitpid(hijosH[j], &estado, 0);					
-				sprintf(aux1, "%d.txt", hijosH[j]);
-								
-				archAuxE = fopen( aux1, "r");
-			
-				while ( (c = fgetc(archAuxE)) != EOF ) {
-	    			if (c != '\n') {
-	       				fprintf(archAuxS, "%c", EncrptMurcielago(c));
-	    			}
-	    		}
-	    	}
-
-			fclose(archAuxE);
-			fclose(archAuxS);
-
+			ProcesoIntermedio(hijosH, nHijos, argv[1][1]);
 			free(hijosH);
 			free(hijosI);
-
-			free(ra);
-			free(ra1);
+			free(ncI);
+			free(ncH);
 
 			exit (0);
 
 		} else {
-			inicio += ra[i];
+			
+			inicio += ncI[i];
 			hijosI[i] = pidI;
 
 		}
 		
 	}
-	for (i=0;i<nHijos; i++) {
-		char aux2[20];
-		waitpid(hijosI[i], &estado, 0);
-		sprintf(aux2, "%d.txt", hijosI[i]);
+	archS = fopen(argv[4], "w");
+	ConcatResultado(hijosI, nHijos, archS);
 
-		archAuxE = fopen(aux2, "r");
-		
-		while ( (c = fgetc(archAuxE)) != EOF ) {
-			if (c != '\n') {
-   				fprintf(archS, "%c", c);
-			}
-		}
-		fclose(archAuxE);
-
-	}
-
-	free(ra);
-
+	free(ncI);
 	free(hijosH);
 	free(hijosI);
-
 	fclose(archS);
-	fclose(archE);
 	return 0;
 }

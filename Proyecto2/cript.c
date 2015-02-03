@@ -28,8 +28,9 @@ int main(int argc, char const *argv[]) {
 			if ( c != ' ' && c != '\n') {
 				fprintf(archS, "%c",  EncrptMurcielago( EncrptCesar(c) ) );
 	    	}
+
 	    }
-	
+		fprintf(archS, "\n");
 	} else if (argv[1][1] == 'd') {
 	    
 	    while ( (c = fgetc(archE)) != EOF ) {

@@ -1,11 +1,13 @@
 #include "algosDesencriptacion.h"
 
 char DesEnCesar( char nuevo ) {
-	if (nuevo > 96 + 2) { 
-		nuevo = nuevo - 2;
+	if (nuevo > 96 && nuevo < 123) {
+		if (nuevo > 96 + 2) { 
+			nuevo = nuevo - 2;
 
-	} else {
-		nuevo = nuevo + (26-2);
+		} else {
+			nuevo = nuevo + (26-2);
+		}
 	}
 	return nuevo;
 
