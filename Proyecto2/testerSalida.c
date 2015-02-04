@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]) {
 	printf("tamanos: %ld %ld \n", tamano1, tamano2);
 
 	i=0;
-	while ( i < ((tamano1 + tamano2) / 2) ) {
+	while ( i < ((tamano1 + tamano2) / 2) + 5 ) {
 		c1 = fgetc(arch1);
 		c2 = fgetc(arch2);
 
