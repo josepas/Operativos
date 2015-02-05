@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2014.12.17)  4 FEB 2015 15:18
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2014.12.17)  4 FEB 2015 18:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -248,31 +248,78 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 76.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-) [1
+)
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.88 ...section{Implementacion Secuencial}\newline
+                                                  
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
+
+ []
+
+[1
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] (./assignment_3.aux) )
- 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.98 ...ction{Implementacion con Procesos}\newline
+                                                  
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 100--101
+
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.105 ...section{Implementacion con Hilos}\newline
+                                                  
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--108
+
+ []
+
+[2] (./assignment_3.aux) ) 
 Here is how much of TeX's memory you used:
- 3015 strings out of 495059
- 40590 string characters out of 3182029
- 206472 words of memory out of 3000000
- 6176 multiletter control sequences out of 15000+200000
- 18045 words of font info for 42 fonts, out of 3000000 for 9000
+ 3017 strings out of 495059
+ 40615 string characters out of 3182029
+ 207472 words of memory out of 3000000
+ 6177 multiletter control sequences out of 15000+200000
+ 18359 words of font info for 43 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  35i,10n,47p,643b,285s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/josepas/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk> </home/j
-osepas/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1200.600pk> </home/josepas/.t
-exmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/josepas/.texmf-var/
-fonts/pk/ljfour/jknappen/ec/eccc1440.600pk> </home/josepas/.texmf-var/fonts/pk/
-ljfour/jknappen/ec/ectt1440.600pk> </home/josepas/.texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ecrm1440.600pk> </home/josepas/.texmf-var/fonts/pk/ljfour/jknappen/ec
-/ecrm2074.600pk> </home/josepas/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1095
-.600pk>
-Output written on assignment_3.pdf (2 pages, 49270 bytes).
+ </home/josepas/.texmf-var/fonts/pk/ljfour/jknappen/e
+c/ectt1095.600pk> </home/josepas/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti109
+5.600pk> </home/josepas/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1200.600pk> 
+</home/josepas/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/jo
+sepas/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1440.600pk> </home/josepas/.te
+xmf-var/fonts/pk/ljfour/jknappen/ec/ectt1440.600pk> </home/josepas/.texmf-var/f
+onts/pk/ljfour/jknappen/ec/ecrm1440.600pk> </home/josepas/.texmf-var/fonts/pk/l
+jfour/jknappen/ec/ecrm2074.600pk> </home/josepas/.texmf-var/fonts/pk/ljfour/jkn
+appen/ec/eccc1095.600pk>
+Output written on assignment_3.pdf (2 pages, 64927 bytes).
 PDF statistics:
- 192 PDF objects out of 1000 (max. 8388607)
- 38 compressed objects within 1 object stream
+ 251 PDF objects out of 1000 (max. 8388607)
+ 42 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
