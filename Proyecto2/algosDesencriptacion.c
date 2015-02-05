@@ -1,5 +1,8 @@
 #include "algosDesencriptacion.h"
 
+/* Recibe un caracter y devuelve el caracter que le sigue en 2 posiciones 
+ * del abecedario. 
+ */ 
 char DesEnCesar( char nuevo ) {
 	if (nuevo > 96 && nuevo < 123) {
 		if (nuevo > 96 + 2) { 
@@ -12,6 +15,10 @@ char DesEnCesar( char nuevo ) {
 	return nuevo;
 
 }
+
+/* Recibe un caracter y devuelve el caracter que le sigue en 2 posiciones 
+ * del abecedario. 
+ */
 
 char DesEnMurcielago(char nuevo) {
 
