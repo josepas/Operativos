@@ -1,5 +1,7 @@
 #include "procesos.h"
 
+// Realiza el primer algoritmo de encriptacion/desencriptacion dependiendo del flag.
+
 void ProcesoHoja(int inicio, int nc, pid_t pid, char* entrada, char modo) {
 	FILE* salida;
 	FILE* auxEntrada;
@@ -24,6 +26,8 @@ void ProcesoHoja(int inicio, int nc, pid_t pid, char* entrada, char modo) {
 	fclose(auxEntrada);
 	fclose(salida);
 }
+
+// Crea hijos y luego concatena los resultados.
 
 void ProcesoIntermedio(pid_t* hijosH, int nHijos, char modo) {
 	FILE* archAuxE;
@@ -59,6 +63,8 @@ void ProcesoIntermedio(pid_t* hijosH, int nHijos, char modo) {
 	fprintf(archAuxS, "\n");
 	fclose(archAuxS);
 }
+
+// Concatena los resultados de los hijos intermedios. 
 
 void ConcatResultado(pid_t* hijosI, int nHijos, FILE* archS) {
 	

@@ -1,5 +1,8 @@
 #include "hilos.h"
 
+// Realiza el primer algoritmo de encriptacion/desencriptacion usando la estrategia 
+// de hilos dependiendo del flag -c/-d.
+
 void* HiloHoja(void* argumentoHilo) {
 
 	int i;
@@ -15,6 +18,8 @@ void* HiloHoja(void* argumentoHilo) {
 	}
 	return(0);
 }
+
+// Crea hijos y luego concatena los resultados.
 
 void* HiloIntermedio(void* argumentoHilo) {
 	

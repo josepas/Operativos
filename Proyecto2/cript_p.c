@@ -1,28 +1,37 @@
 #include "procesos.h"
 
+/*	
+ *	Se hace el cifrado de un texto usando procesos. 
+ *	Para cifrar se hará uso de los códigos césar y murciélago. 
+ */ 
+
 int main(int argc, char const *argv[]) {
 
 	FILE* archE;
 	FILE* archS;
 	char entrada[25];
 
-	int i, j;
-	int TI, TF;
-	long nHijos;
-	long* ncI;				//Numero de caracteres a procesar por hijoI;
-	long* ncH;				//Numero de caracteres a procesar por hijoH;
-	long inicio, inicio1;
+	int   i, j;
+	int   TI, TF;
+	long  nHijos;
+	long* ncI;				// Numero de caracteres a procesar por hijoI;
+	long* ncH;				// Numero de caracteres a procesar por hijoH;
+	long  inicio, inicio1;
 
 	pid_t* hijosH;
 	pid_t* hijosI;
 
 	pid_t pidI, pidH;
 
+	// Mensaje de error si el comando esta hecho incorrectamente. 
+
 	if (argc != 5) {
 		printf("llamada hecha incorrectamente.\n");
 		printf("cript_p [-c/-d] <NumeroHijos> <archivoEntrada> <archivoSalida> \n");
 		return 0;
 	}
+
+	// Mensaje de error si el archivo a leer no existe. 	
 
 	archE = fopen(argv[3], "r");
 	if (archE == 0) {
