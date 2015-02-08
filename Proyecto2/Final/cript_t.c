@@ -1,5 +1,10 @@
 #include "hilos.h"
 
+/*	
+ *	Se hace el cifrado de un texto usando hilos. 
+ *	Para cifrar se hará uso de los códigos césar y murciélago. 
+ */
+
 int main(int argc, char const *argv[]) {
 	
 	FILE* archE;

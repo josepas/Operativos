@@ -1,5 +1,10 @@
 #include "procesos.h"
 
+/*	
+ *	Se hace el cifrado de un texto usando procesos. 
+ *	Para cifrar se hará uso de los códigos césar y murciélago. 
+ */ 
+
 int main(int argc, char const *argv[]) {
 
 	FILE* archE;
@@ -17,6 +22,8 @@ int main(int argc, char const *argv[]) {
 	pid_t* hijosI;
 
 	pid_t pidI, pidH;
+
+	// Mensaje de error si el comando esta hecho incorrectamente. 
 
 	if (argc != 5) {
 		printf("llamada hecha incorrectamente.\n");

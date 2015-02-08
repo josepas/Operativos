@@ -1,5 +1,7 @@
 #include "extras.h"
 
+// Calcula cuanto tiene que trabajar cada hijo. 
+
 long* Rangos(long tamano, long nHijos) {
 	
 	long* r;
@@ -18,6 +20,8 @@ long* Rangos(long tamano, long nHijos) {
 	}
 	return r;
 }
+
+// Toma el tiempo en que tarda trabajando.
 
 int TomarTiempo() {
 	struct timeval t;     

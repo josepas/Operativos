@@ -1,5 +1,9 @@
 #include "algosEncriptacion.h"
 
+/* Recibe un caracter y devuelve el caracter que le sigue en 2 posiciones 
+ * del abecedario. 
+ */
+
 char EncrptCesar(char nuevo) {
 	
 	if (nuevo > 96 && nuevo < 123) {
@@ -13,6 +17,10 @@ char EncrptCesar(char nuevo) {
 	return nuevo;
 }
 
+/* Recibe un caracter y devuelve el caracter que esta 2 posiciones antes
+ * en el abecedario. 
+ */
+
 char DesEnCesar( char nuevo ) {
 	if (nuevo > 96 && nuevo < 123) {
 		if (nuevo > 96 + 2) { 
@@ -25,6 +33,10 @@ char DesEnCesar( char nuevo ) {
 	return nuevo;
 
 }
+
+/* Recibe un caracter y si es una letra de la palabra murcielago devuelve 
+ * un número predeterminado. m=0, u=1,r=2, c=3, i=4, e=5,l=6, a=7, g=8, o=9.
+ */
 
 char EncrptMurcielago(char nuevo) {
 
@@ -60,6 +72,10 @@ char EncrptMurcielago(char nuevo) {
 	}
 	return nuevo;
 }
+
+/* Recibe un caracter y si es un número del 0-9 devuelve un caracter de la palabra muricielago 
+ * en coherencia a lo predeterminado en Encryptmurcielago. 
+ */
 
 char DesEnMurcielago(char nuevo) {
 
