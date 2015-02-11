@@ -87,7 +87,7 @@ El proyecto consistio en crear soluciones para la encriptacion y desencriptacion
 
 Para esta solucion se recorrio linealmente el archivo de entrada caracter a caracter haciendo las dos transformaciones sucesivamente e imprimiendo cada caracter resultante en el archivo de salida hasta encontrar el fin del archivo.
 
-Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres: 342012 nanosegundos
+Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres: 342012 nanosegundos.
 
 \newpage
 
@@ -98,8 +98,8 @@ Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres: 342
 
 Como fue explicada en el enunciado esta solucion crea la cantidad de procesos por hijo que se le especifique como parametro el proceso principal crea sus hijos intermedios y estos a su vez crean los hijos hojas que aplican el algoritmo que corresponda, luego los hijos intermedios esperan a que sus hijos terminen, concatenan los resultados que fueron guardados en los archivos hojas, aplican el algoritmo que corresponda y guardan en otro archivo temporal, por ultimo el proceso principal espera por los hijos intermedios para concatenar la solucion, omitir los espacios si es necesario y guardar todo en el archivo salida.
 
-Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres y 3 hijos por proceso: 579042 nanosegundos
-Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres y 10 hijos por proceso: 605053 nanosegundos
+Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres y 3 hijos por proceso: 579042 nanosegundos.\newline
+Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres y 10 hijos por proceso: 605053 nanosegundos.\newline
 
 
 \subsection{Implementacion con Hilos}\newline
@@ -108,8 +108,10 @@ Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres y 10
 
 La implementacion con hilos carga todos los caracteres del archivo en un arreglo y luego la funcionalidad es muy parecida a la implementacion con procesos, solo que ahora todos los hijos estan trabajando en un mismo arreglo, dado que los hijos estan dentro del mismo proceso comparten este arreglo y los demas datos. Al final el hilo raiz guarda el arreglo en el archivo salida omitiendo los espacios si es necesario.
 
-Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres y 3 hijos por hilo: 648258 nanosegundos
-Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres y 10 hijos por hilo: 676716 nanosegundos
+Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres y 3 hijos por hilo: 648258 nanosegundos.\newline
+Tiempo promedio de corrida para pruebas realizadas con 2 284 880 caracteres y 10 hijos por hilo: 676716 nanosegundos.\newline
+
+\newpage
 
 A continuacion las especificaciones del procesador donde se corrieron las pruebas:
 
