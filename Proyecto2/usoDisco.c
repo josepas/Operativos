@@ -1,18 +1,17 @@
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/stat.h>
-
+#include "colaTrabajos.h"
 
 int main(int argc, char *argv[]) {
 
     char* directorio = NULL;
     char* salida;
-    int index;
+
+    pid_t pid;
+    pid_t* trabajadores;
+
     char buff[500];
-    int nHijos = 0;
-    int c;
+    int nHijos = 1;
+    int c, i;
+
 
     opterr = 0;
     while ((c = getopt (argc, argv, "hn:d:")) != -1) {
@@ -49,7 +48,83 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    printf ("directorio = %s, nHijos = %d salida = %s.\n", directorio, nHijos, salida );
+    trabajadores = (pid_t*)malloc(sizeof(pid_t) * nHijos);
+
+    int alPadre[2];
+    int** aHijos;
+
+    // Matriz de pipes
+    aHijos = (int **) malloc(sizeof(int *)*nHijos);
+    for (i = 0; i < nHijos; i++) {
+        aHijos[i] = (int *) malloc(sizeof(int)*2);
+    }
+
+    pipe(alPadre);
+
+
+
+
+
+
+    // Se crea el pool de procesos
+    for (i = 0; i < nHijos; i++) {
+
+        pipe(aHijos[i]);
+        pid = fork();
+
+
+        if (pid == 0) {
+            
+            int j;
+            FILE* salida;
+            close(alPadre [0]);
+            for (j = 0; j<i; j++) {
+                close(aHijos[j][0]);
+                close(aHijos[j][1]);
+            }
+            close(aHijos[i][1]);
+
+
+
+
+
+            salida = fdopen(alPadre[1], "w");
+            fprintf(salida, "hola como estas %i\n", i);
+
+
+
+
+            exit(0);
+
+        } else {
+            trabajadores[i] = pid;
+        }
+    }
+
+    close(alPadre[1]);
+    char buffer[1024];
+    FILE* entrada = fdopen(alPadre[0], "r");
+    while ( !feof (entrada) &&  fgets (buffer, sizeof (buffer), entrada) != NULL ) {
+        printf("%s\n", buffer);
+    }
+
+    ColaT* trabajos;
+
+    trabajos = CrearColaT();
+
+    EncolarT(trabajos, "hola1");
+    EncolarT(trabajos, "hola2");
+    EncolarT(trabajos, "hola3");
+    EncolarT(trabajos, "hola4");
+    EncolarT(trabajos, "hola5");
+
+    printf("%s\n", DesencolarT(trabajos));
+    printf("%s\n", DesencolarT(trabajos));
+    printf("%s\n", DesencolarT(trabajos));
+    printf("%s\n", DesencolarT(trabajos));
+    printf("%s\n", DesencolarT(trabajos));
+    
+
 
     return 0; 
 

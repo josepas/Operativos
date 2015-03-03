@@ -1,0 +1,353 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pthrea",
+				"pthread_exit"
+			],
+			[
+				"e",
+				"e"
+			],
+			[
+				"c",
+				"c"
+			],
+			[
+				"C",
+				"CFLAGS"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "#include <ctype.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <unistd.h>\n#include <sys/stat.h>\n\n\nint main(int argc, char *argv[]) {\n\n    char* directorio = NULL;\n    char* salida;\n    int index;\n\n    pid_t pid;\n    pid_t* trabajadores;\n\n    char buff[500];\n    int nHijos = 1;\n    int c, i;\n\n    opterr = 0;\n    while ((c = getopt (argc, argv, \"hn:d:\")) != -1) {\n        switch (c) {\n            case 'h':\n                printf(\"UsoDisco [-h] | [-n i] [-d directorio] salida\\n\");\n                printf(\"\\n\");\n                printf(\"-h  Muestra esta informacion de uso.\\n\");\n                printf(\"-n  Numero de procesos a usar.\\n\");\n                printf(\"-d  Directorio al que se aplica el programa.\\n\");\n                exit(0);\n            case 'd':\n                directorio = optarg;\n                break;\n            case 'n':\n                nHijos = atoi(optarg);\n                break;\n            case '?':\n                if (optopt == 'n')\n                    fprintf (stderr, \"Opcion -%c requiere un argumento.\\n\", optopt);\n                else if (optopt == 'd')\n                    fprintf (stderr, \"Opcion -%c requiere un argumento.\\n\", optopt);\n                else\n                    fprintf (stderr, \"Opcion desconocida -%c.\\n\", optopt);\n            default:\n                exit(1);\n        }\n    }\n    salida = argv[optind];\n    if (directorio == NULL)\n        directorio = getcwd(buff, sizeof(buff));\n    if (salida == NULL) {\n        printf(\"Archivo de salida no especificado\\n\");\n        exit(1);\n    }\n\n    trabajadores = (pid_t*)malloc(sizeof(pid_t) * nHijos);\n\n    // Se crea el pool de procesos\n    for (i = 0; i < nHijos; i++) {\n        pid = fork();\n        if (pid == 0) {\n\n\n\n        } else {\n            trabajadores[i] = pid;\n        }\n    }\n\n\n\n\n    return 0; \n\n}",
+			"file": "usoDisco.c",
+			"file_size": 1775,
+			"file_write_time": 130683288260000000,
+			"settings":
+			{
+				"buffer_size": 1809,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"c",
+				"Set Syntax: C"
+			],
+			[
+				"C",
+				"Set Syntax: C"
+			],
+			[
+				"make",
+				"Set Syntax: Makefile"
+			],
+			[
+				"Make",
+				"Set Syntax: Makefile"
+			],
+			[
+				"bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"late",
+				"Set Syntax: LaTeX"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"java",
+				"Set Syntax: Java"
+			],
+			[
+				"package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 593.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2deb499853c4371624f5a07e27c334aa' + 'bf8c4e67d14fb0525ba4f89698a6d7e1'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"import urllib.request,os; pr='Preferences.sublime-settings'; ip='ignored_packages'; n='Package Control'; s=sublime.load_settings(pr); ig=s.get(ip); ig.append(n); s.set(ip,ig); sublime.save_settings('Preferences.sublime-settings'); pf=n+'.sublime-package'; urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler())); by=urllib.request.urlopen('https://packagecontrol.io/'+pf.replace(' ','%20')).read(); open(os.path.join(sublime.installed_packages_path(),pf),'wb').write(by); ig.remove(n); s.set(ip,ig); sublime.save_settings(pr); print('Package Control: 3.0.0 upgrade successful!')",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/josepas/Documents/Operativos/Proyecto2"
+	],
+	"file_history":
+	[
+		"/home/josepas/Documents/Operativos/Proyecto1/cript_p.c",
+		"/home/josepas/Documents/GL1-DicMar/Tarea2/GrupoLinux1 - Tarea 4.tex",
+		"/home/josepas/Documents/PruebaGL3/Proyecto1/cript_t.c",
+		"/home/josepas/Documents/BasesDeDatos/crearMister.sql",
+		"/home/josepas/Documents/BasesDeDatos/README.md",
+		"/home/josepas/Documents/BasesDeDatos/restricciones.sql",
+		"/home/josepas/Documents/BasesDeDatos/destruirMister.sql",
+		"/home/josepas/Documents/Operativos/Proyecto2/Informe/assignment_3.tex",
+		"/home/josepas/Documents/Operativos/Proyecto2/Informe/assignment_3.",
+		"/home/josepas/Documents/BasesDeDatos/misterProcesador.dia",
+		"/home/josepas/Documents/Operativos/Proyecto2/algosEncriptacion.c",
+		"/home/josepas/Documents/Operativos/Proyecto2/cript.c",
+		"/home/josepas/Documents/Operativos/Proyecto2/cript_p.c",
+		"/home/josepas/Documents/Operativos/Proyecto2/testerSalida.c",
+		"/home/josepas/Documents/Operativos/Proyecto2/cript_t.c",
+		"/home/josepas/Documents/Operativos/Proyecto2/algosEncriptacion.h",
+		"/home/josepas/Documents/Operativos/Proyecto2/Makefile",
+		"/home/josepas/Documents/Operativos/Proyecto2/extras.c",
+		"/home/josepas/Documents/Operativos/Proyecto2/extras.h",
+		"/home/josepas/Documents/Operativos/Proyecto2/hilos.h",
+		"/home/josepas/Documents/Operativos/Proyecto2/procesos.h",
+		"/home/josepas/Documents/Operativos/Proyecto2/procesos.c",
+		"/home/josepas/Documents/Operativos/Proyecto2/hilos.c",
+		"/home/josepas/Documents/GL1-DicMar/GL1-Tarea1.tex",
+		"/home/josepas/Documents/Operativos/Proyecto1/Final/grafo.h",
+		"/home/josepas/Documents/Operativos/Proyecto2/algosDesencriptacion.c",
+		"/home/josepas/Documents/Operativos/Proyecto2/algosDesencriptacion.h",
+		"/home/josepas/Documents/Operativos/Proyecto1/Final/grafo.c",
+		"/home/josepas/Documents/Operativos/Proyecto1/Final/Makefile",
+		"/home/josepas/Documents/Operativos/Proyecto2/main.c",
+		"/home/josepas/Documents/Operativos/Proyecto2/culito.txt",
+		"/home/josepas/Documents/Operativos/Proyecto1/Final/main.c",
+		"/home/josepas/Documents/GL1-DicMar/GrupoLinux 1 - Tarea 3.tex",
+		"/media/15CF-0D32/latexcode.txt",
+		"/home/josepas/Documents/Operativos/Proyecto2/pruebaMurcielago/main.c",
+		"/home/josepas/Documents/GL1-DicMar/Tarea2/GrupoLinux 1 - Tarea 2.tex",
+		"/home/josepas/Documents/Operativos/Proyecto1/Final/pilaEnteros.h",
+		"/home/josepas/Documents/Operativos/Proyecto1/Final/pilaEnteros.c",
+		"/home/josepas/Documents/Operativos/Proyecto1/Makefile",
+		"/home/josepas/Documents/Operativos/Proyecto1/pilaEnteros.c",
+		"/home/josepas/Documents/Operativos/Proyecto1/pilaEnteros.h",
+		"/home/josepas/Documents/Operativos/Proyecto1/grafo.c",
+		"/home/josepas/Documents/Operativos/Proyecto1/grafo.h",
+		"/home/josepas/Documents/Operativos/Proyecto1/main.c",
+		"/home/josepas/Documents/Operativos/Proyecto1/entrada.in",
+		"/home/josepas/Documents/Operativos/Proyecto1/pruebaPila.c",
+		"/home/josepas/Documents/Operativos/Proyecto1/nodo.c",
+		"/home/josepas/Documents/Operativos/Proyecto1/nodo.h",
+		"/home/josepas/Documents/Operativos/Proyecto1/arista.c",
+		"/home/josepas/Documents/Operativos/Proyecto1/arista.h",
+		"/home/josepas/Documents/Scripts/acogida.sh",
+		"/home/josepas/Documents/Operativos/Proyecto1/lista.c",
+		"/home/josepas/Documents/Operativos/Proyecto1/lista.h",
+		"/home/josepas/Documents/Operativos/Practicas/practica.c",
+		"/home/josepas/Documents/GL1-DicMar/Tarea1.tex",
+		"/home/josepas/Documents/Scripts/cambiarWP.sh"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"unknown",
+			"section",
+			"rangos",
+			"ra",
+			"thread",
+			"malloc",
+			"open",
+			"fseek",
+			"fclose",
+			"fseek",
+			"ra",
+			"malloc",
+			"printf",
+			"#$(",
+			"alloc",
+			"printf",
+			"NHijos",
+			"str[i]",
+			"amin",
+			"	EmpilarEnt(p, 2);\n	EmpilarEnt(p, 3);\n	EmpilarEnt(p, 4);\n	EmpilarEnt(p, 5);\n	ImprimirPilaEnt(p);\n	DesempilarEnt(p);\n	DesempilarEnt(p);\n	ImprimirPilaEnt(p);\n	EmpilarEnt(p, 69);\n	ImprimirPilaEnt(p);",
+			">\n",
+			"printf",
+			"print",
+			"tmp",
+			"lis",
+			"sleep"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"Rangos",
+			"nHijos",
+			"nuevo"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "usoDisco.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1809,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1635,
+								1635
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "proyecto2OS.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"",
+				"untitled"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 92.0,
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
