@@ -1,5 +1,6 @@
 #include "colaTrabajos.h"
 
+
 int main(int argc, char *argv[]) {
 
     char* directorio = NULL;
@@ -10,7 +11,7 @@ int main(int argc, char *argv[]) {
 
     char buff[500];
     int nHijos = 1;
-    int c, i;
+    int c, i, j;
 
 
     opterr = 0;
@@ -52,17 +53,15 @@ int main(int argc, char *argv[]) {
 
     int alPadre[2];
     int** aHijos;
+    int links = 0;
 
     // Matriz de pipes
-    aHijos = (int **) malloc(sizeof(int *)*nHijos);
+    aHijos = (int **) malloc(sizeof(int *) * nHijos);
     for (i = 0; i < nHijos; i++) {
         aHijos[i] = (int *) malloc(sizeof(int)*2);
     }
 
     pipe(alPadre);
-
-
-
 
 
 
@@ -72,11 +71,12 @@ int main(int argc, char *argv[]) {
         pipe(aHijos[i]);
         pid = fork();
 
-
         if (pid == 0) {
             
             int j;
-            FILE* salida;
+            //FILE* salidaHijo;
+            FILE* entradaHijo;
+            char buffer2[1024];
             close(alPadre [0]);
             for (j = 0; j<i; j++) {
                 close(aHijos[j][0]);
@@ -84,46 +84,133 @@ int main(int argc, char *argv[]) {
             }
             close(aHijos[i][1]);
 
+            entradaHijo = fdopen(aHijos[i][0], "r");
+            while ( !feof (entradaHijo) &&  fgets (buffer2, sizeof (buffer2), entradaHijo) != NULL) {
+                buffer2[strcspn(buffer2, "\n")] = 0;
+                printf("Escribi desde un hijo ---> %s\n", buffer2);
+
+            }
+            
+            DIR* dH;
+            struct dirent *dirH;
+            struct stat atributosH;
+            char* directorioH;
+            int sumaHijo = 0;
+
+
+            asprintf(&directorioH, "%s/%s", directorio, buffer2);
+            printf("%s----\n", directorioH);
+            dH = opendir(directorioH);
+
+            while ((dirH = readdir(dH)) != NULL) {
+                if (dirH->d_name[0] == '.') {
+                    continue;
+                }
+                printf("%s\n", dirH->d_name);
+                lstat(dirH->d_name, &atributosH);
+
+                if (S_ISDIR(atributosH.st_mode)) {
+                    printf("DIRRRR\n");
+                }
+                if (S_ISLNK(atributosH.st_mode)) {
+                }
+                if (S_ISREG(atributosH.st_mode)) {
+
+                    sumaHijo += (int)atributosH.st_blocks;
+                    
+                }
+                
+            }
+            printf("%s %d\n", directorioH, sumaHijo);
 
 
 
 
-            salida = fdopen(alPadre[1], "w");
-            fprintf(salida, "hola como estas %i\n", i);
+            
 
 
 
+            //salidaHijo = fdopen(alPadre[1], "w");
+            //fprintf(salidaHijo, "hola como estas %i\n", i);
+
+            
+
+
+            printf("TERMINARE SOY TU HIJO\n");
 
             exit(0);
 
         } else {
-            trabajadores[i] = pid;
+            trabajadores[i] = 0;
         }
     }
 
     close(alPadre[1]);
-    char buffer[1024];
-    FILE* entrada = fdopen(alPadre[0], "r");
-    while ( !feof (entrada) &&  fgets (buffer, sizeof (buffer), entrada) != NULL ) {
-        printf("%s\n", buffer);
-    }
 
+
+    
+
+    DIR *d;
     ColaT* trabajos;
+    struct dirent *dir;
+    struct stat atributos;
+    int suma = 0;
+    int estado;
 
     trabajos = CrearColaT();
+    d = opendir(directorio);
 
-    EncolarT(trabajos, "hola1");
-    EncolarT(trabajos, "hola2");
-    EncolarT(trabajos, "hola3");
-    EncolarT(trabajos, "hola4");
-    EncolarT(trabajos, "hola5");
+    while ((dir = readdir(d)) != NULL) {
 
-    printf("%s\n", DesencolarT(trabajos));
-    printf("%s\n", DesencolarT(trabajos));
-    printf("%s\n", DesencolarT(trabajos));
-    printf("%s\n", DesencolarT(trabajos));
-    printf("%s\n", DesencolarT(trabajos));
+        if (dir->d_name[0] == '.') {
+            continue;
+        }
+        lstat(dir->d_name, &atributos);
+
+        if (S_ISDIR(atributos.st_mode)) {
+            EncolarT(trabajos, dir->d_name);
+        }
+        if (S_ISLNK(atributos.st_mode)) {
+            links++;
+        }
+        if (S_ISREG(atributos.st_mode)) {
+            suma += (int)atributos.st_blocks;
+
+        }
+    }
+
+
+    printf("%s %d\n", directorio, suma);
+
+    //FILE* entradaPadre = fdopen(alPadre[0], "r");
     
+    FILE** salidaPadre;
+    salidaPadre = (FILE**)malloc(sizeof(FILE*) * nHijos);
+    for (i = 0; i < nHijos; i++) {
+        salidaPadre[i] = fdopen(aHijos[i][1], "w");
+    }
+
+
+    //char buffer[1024];
+    while ( esVaciaColaT(trabajos) == 0 ) {
+        
+        j = 0;
+        while (j < nHijos) {
+            if (trabajadores[j] == 0) {
+                fprintf(salidaPadre[j], "%s\n", DesencolarT(trabajos));
+                trabajadores[j] = 1;
+            }
+            j++;
+        } 
+        
+        //while ( !feof (entradaPadre) &&  fgets (buffer, sizeof (buffer), entradaPadre) != NULL) {
+        //    printf("%s\n", buffer);
+        //}
+
+
+
+    }
+
 
 
     return 0; 

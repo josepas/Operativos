@@ -24,13 +24,42 @@
 	"buffers":
 	[
 		{
-			"contents": "#include <ctype.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <unistd.h>\n#include <sys/stat.h>\n\n\nint main(int argc, char *argv[]) {\n\n    char* directorio = NULL;\n    char* salida;\n    int index;\n\n    pid_t pid;\n    pid_t* trabajadores;\n\n    char buff[500];\n    int nHijos = 1;\n    int c, i;\n\n    opterr = 0;\n    while ((c = getopt (argc, argv, \"hn:d:\")) != -1) {\n        switch (c) {\n            case 'h':\n                printf(\"UsoDisco [-h] | [-n i] [-d directorio] salida\\n\");\n                printf(\"\\n\");\n                printf(\"-h  Muestra esta informacion de uso.\\n\");\n                printf(\"-n  Numero de procesos a usar.\\n\");\n                printf(\"-d  Directorio al que se aplica el programa.\\n\");\n                exit(0);\n            case 'd':\n                directorio = optarg;\n                break;\n            case 'n':\n                nHijos = atoi(optarg);\n                break;\n            case '?':\n                if (optopt == 'n')\n                    fprintf (stderr, \"Opcion -%c requiere un argumento.\\n\", optopt);\n                else if (optopt == 'd')\n                    fprintf (stderr, \"Opcion -%c requiere un argumento.\\n\", optopt);\n                else\n                    fprintf (stderr, \"Opcion desconocida -%c.\\n\", optopt);\n            default:\n                exit(1);\n        }\n    }\n    salida = argv[optind];\n    if (directorio == NULL)\n        directorio = getcwd(buff, sizeof(buff));\n    if (salida == NULL) {\n        printf(\"Archivo de salida no especificado\\n\");\n        exit(1);\n    }\n\n    trabajadores = (pid_t*)malloc(sizeof(pid_t) * nHijos);\n\n    // Se crea el pool de procesos\n    for (i = 0; i < nHijos; i++) {\n        pid = fork();\n        if (pid == 0) {\n\n\n\n        } else {\n            trabajadores[i] = pid;\n        }\n    }\n\n\n\n\n    return 0; \n\n}",
 			"file": "usoDisco.c",
-			"file_size": 1775,
-			"file_write_time": 130683288260000000,
 			"settings":
 			{
-				"buffer_size": 1809,
+				"buffer_size": 3009,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "colaTrabajos.h",
+			"settings":
+			{
+				"buffer_size": 382,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "colaTrabajos.c",
+			"settings":
+			{
+				"buffer_size": 799,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 257,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/josepas/Documents/Operativos/Proyecto1/cript_p.c",
+			"settings":
+			{
+				"buffer_size": 2198,
 				"line_ending": "Unix"
 			}
 		}
@@ -41,6 +70,26 @@
 		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"",
+				"About"
+			],
+			[
+				"toggl",
+				"View: Toggle Menu"
+			],
+			[
+				"toggle",
+				"View: Toggle Side Bar"
+			],
+			[
+				"toggle tabs",
+				"View: Toggle Tabs"
+			],
+			[
+				"togg",
+				"View: Toggle Tabs"
+			],
 			[
 				"c",
 				"Set Syntax: C"
@@ -113,6 +162,9 @@
 	],
 	"file_history":
 	[
+		"/home/josepas/Documents/Operativos/Proyecto1/Makefile",
+		"/home/josepas/Documents/Operativos/Proyecto2/proyecto2OS.sublime-project",
+		"/home/josepas/Documents/Operativos/Proyecto2/usodico",
 		"/home/josepas/Documents/Operativos/Proyecto1/cript_p.c",
 		"/home/josepas/Documents/GL1-DicMar/Tarea2/GrupoLinux1 - Tarea 4.tex",
 		"/home/josepas/Documents/PruebaGL3/Proyecto1/cript_t.c",
@@ -151,7 +203,6 @@
 		"/home/josepas/Documents/GL1-DicMar/Tarea2/GrupoLinux 1 - Tarea 2.tex",
 		"/home/josepas/Documents/Operativos/Proyecto1/Final/pilaEnteros.h",
 		"/home/josepas/Documents/Operativos/Proyecto1/Final/pilaEnteros.c",
-		"/home/josepas/Documents/Operativos/Proyecto1/Makefile",
 		"/home/josepas/Documents/Operativos/Proyecto1/pilaEnteros.c",
 		"/home/josepas/Documents/Operativos/Proyecto1/pilaEnteros.h",
 		"/home/josepas/Documents/Operativos/Proyecto1/grafo.c",
@@ -186,6 +237,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"fd",
 			"unknown",
 			"section",
 			"rangos",
@@ -219,6 +271,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"alPadre",
 			"Rangos",
 			"nHijos",
 			"nuevo"
@@ -232,7 +285,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -241,15 +294,28 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1809,
+						"buffer_size": 3009,
 						"regions":
 						{
+							"mark":
+							{
+								"flags": 144,
+								"icon": "dot",
+								"regions":
+								[
+									[
+										2992,
+										2992
+									]
+								],
+								"scope": "mark"
+							}
 						},
 						"selection":
 						[
 							[
-								1635,
-								1635
+								2984,
+								2984
 							]
 						],
 						"settings":
@@ -259,10 +325,138 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 180.0,
+						"translation.y": 1125.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "colaTrabajos.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 382,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								78,
+								78
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "colaTrabajos.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 799,
+						"regions":
+						{
+							"mark":
+							{
+								"flags": 144,
+								"icon": "dot",
+								"regions":
+								[
+									[
+										135,
+										135
+									]
+								],
+								"scope": "mark"
+							}
+						},
+						"selection":
+						[
+							[
+								796,
+								796
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 257,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								130,
+								130
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/josepas/Documents/Operativos/Proyecto1/cript_p.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2198,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -270,7 +464,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"input":
 	{
@@ -298,7 +492,7 @@
 			1.0
 		]
 	},
-	"menu_visible": true,
+	"menu_visible": false,
 	"output.find_results":
 	{
 		"height": 0.0
@@ -306,7 +500,7 @@
 	"project": "proyecto2OS.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -344,7 +538,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 150.0,
 	"status_bar_visible": true,
 	"template_settings":
