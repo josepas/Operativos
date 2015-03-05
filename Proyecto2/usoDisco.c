@@ -9,9 +9,10 @@ int main(int argc, char *argv[]) {
     pid_t pid;
     pid_t* trabajadores;
 
-    char buff[500];
     int nHijos = 1;
     int c, i, j;
+
+
 
 
     opterr = 0;
@@ -43,7 +44,7 @@ int main(int argc, char *argv[]) {
     }
     salida = argv[optind];
     if (directorio == NULL)
-        directorio = getcwd(buff, sizeof(buff));
+        directorio = ".";
     if (salida == NULL) {
         printf("Archivo de salida no especificado\n");
         exit(1);
@@ -74,7 +75,7 @@ int main(int argc, char *argv[]) {
         if (pid == 0) {
             
             int j;
-            //FILE* salidaHijo;
+            FILE* salidaHijo;
             FILE* entradaHijo;
             char buffer2[1024];
             close(alPadre [0]);
@@ -85,67 +86,75 @@ int main(int argc, char *argv[]) {
             close(aHijos[i][1]);
 
             entradaHijo = fdopen(aHijos[i][0], "r");
+
+
+
             while ( !feof (entradaHijo) &&  fgets (buffer2, sizeof (buffer2), entradaHijo) != NULL) {
                 buffer2[strcspn(buffer2, "\n")] = 0;
-                printf("Escribi desde un hijo ---> %s\n", buffer2);
-
             }
             
             DIR* dH;
             struct dirent *dirH;
             struct stat atributosH;
             char* directorioH;
+            char listaTrabajos[2048];
             int sumaHijo = 0;
+            int linkH = 0;
+            char* resultado;
 
 
-            asprintf(&directorioH, "%s/%s", directorio, buffer2);
-            printf("%s----\n", directorioH);
-            dH = opendir(directorioH);
+            
+            dH = opendir(buffer2);
 
             while ((dirH = readdir(dH)) != NULL) {
                 if (dirH->d_name[0] == '.') {
                     continue;
                 }
-                printf("%s\n", dirH->d_name);
-                lstat(dirH->d_name, &atributosH);
+
+                asprintf(&directorioH, "%s/%s", buffer2, dirH->d_name);
+                lstat(directorioH, &atributosH);
+                printf("%s----\n", directorioH);
 
                 if (S_ISDIR(atributosH.st_mode)) {
                     printf("DIRRRR\n");
+
+                    strcat(listaTrabajos, directorioH);
+                    strcat(listaTrabajos, " ");
+                    printf("%s\n", listaTrabajos);
+
                 }
                 if (S_ISLNK(atributosH.st_mode)) {
+                    linkH++;
                 }
                 if (S_ISREG(atributosH.st_mode)) {
-
                     sumaHijo += (int)atributosH.st_blocks;
-                    
                 }
                 
             }
-            printf("%s %d\n", directorioH, sumaHijo);
+            printf("%s %d\n", buffer2, sumaHijo);
+            asprintf(&resultado, "%d %d %d %s", i, sumaHijo, linkH, listaTrabajos);
+            printf("%s\n", resultado);
+        
 
-
-
-
-            
-
-
-
-            //salidaHijo = fdopen(alPadre[1], "w");
-            //fprintf(salidaHijo, "hola como estas %i\n", i);
+            //write(alPadre[1], resultado, sizeof(resultado));
+            salidaHijo = fdopen(alPadre[1], "w");
+            printf("%i\n", fprintf(salidaHijo, "%s\n", resultado));
+            fflush (salidaHijo);
 
             
 
 
-            printf("TERMINARE SOY TU HIJO\n");
 
             exit(0);
 
         } else {
             trabajadores[i] = 0;
+            close(aHijos[i][0]);
+            close(alPadre[1]);
         }
     }
 
-    close(alPadre[1]);
+    
 
 
     
@@ -155,13 +164,11 @@ int main(int argc, char *argv[]) {
     struct dirent *dir;
     struct stat atributos;
     int suma = 0;
-    int estado;
 
     trabajos = CrearColaT();
     d = opendir(directorio);
 
     while ((dir = readdir(d)) != NULL) {
-
         if (dir->d_name[0] == '.') {
             continue;
         }
@@ -182,18 +189,20 @@ int main(int argc, char *argv[]) {
 
     printf("%s %d\n", directorio, suma);
 
-    //FILE* entradaPadre = fdopen(alPadre[0], "r");
+    FILE* entradaPadre;
     
     FILE** salidaPadre;
     salidaPadre = (FILE**)malloc(sizeof(FILE*) * nHijos);
     for (i = 0; i < nHijos; i++) {
+
         salidaPadre[i] = fdopen(aHijos[i][1], "w");
     }
 
 
-    //char buffer[1024];
+    char buffer[1024];
     while ( esVaciaColaT(trabajos) == 0 ) {
         
+
         j = 0;
         while (j < nHijos) {
             if (trabajadores[j] == 0) {
@@ -201,15 +210,28 @@ int main(int argc, char *argv[]) {
                 trabajadores[j] = 1;
             }
             j++;
+
         } 
+
+                
+
         
-        //while ( !feof (entradaPadre) &&  fgets (buffer, sizeof (buffer), entradaPadre) != NULL) {
-        //    printf("%s\n", buffer);
-        //}
+
 
 
 
     }
+
+
+    //entradaPadre = fdopen(alPadre[0], "r");
+    //sleep(5);
+    //read(alPadre[0], buffer, sizeof(buffer));
+    // while ( !feof (entradaPadre) &&  fgets (buffer, sizeof (buffer), entradaPadre) != NULL) {
+    //     printf("%s\n", buffer);
+
+    // }
+
+
 
 
 
