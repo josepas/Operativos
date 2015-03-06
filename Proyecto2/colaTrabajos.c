@@ -30,22 +30,37 @@ void EncolarT(ColaT* c, char* nuevo) {
 	}
 }
 
-char* DesencolarT(ColaT* c) {
-	char* buffer;
+char* TopeColaT(ColaT* c) {
+	if (c->primero != NULL) {
+		return c->primero->archivo;
+	}
+	return NULL;
+}
+
+void DesencolarT(ColaT* c) {
 	NodoC* aux;
 
 	if ( c->primero != NULL ) {
-		
-		
 		aux = c->primero;
-		buffer = aux->archivo;
 
 		if ( c->primero == c->ultimo ) {
 			c->ultimo = NULL;
-
 		}	
 		c->primero = c->primero->sig;
 	}
-	// ESTE FREE DA PROBLEMAS free(aux);
-	return buffer;
+	return;
+	free(aux);
+	
+}
+
+void ImprimirColaT(ColaT* c) {
+	NodoC* aux;
+
+	aux = c->primero;
+	while (aux != NULL) {
+		printf("COLA:::%s:::\n", aux->archivo);
+		aux = aux->sig;
+	}
+
+
 }

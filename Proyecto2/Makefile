@@ -11,4 +11,4 @@ colaTrabajos.o: colaTrabajos.c
 	$(CC) $(CFLAGS) -c colaTrabajos.c
 
 clean:
-	rm *.o usoDisco
+	rm -rf *.o usoDisco

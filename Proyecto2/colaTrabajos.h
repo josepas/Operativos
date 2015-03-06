@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <dirent.h> 
+#include <signal.h>
 
 
 
@@ -27,5 +28,9 @@ void EncolarT(ColaT* c, char* nuevo);
 
 int esVaciaColaT(ColaT* c);
 
-char* DesencolarT(ColaT* c);
+char* TopeColaT(ColaT* c);
+
+void DesencolarT(ColaT* c);
+
+void ImprimirColaT(ColaT* c);
 
