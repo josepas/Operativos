@@ -1,0 +1,51 @@
+close(3)                                = 0
+close(6)                                = 0
+read(5, "Daniela\n", 1024)              = 8
+open("Daniela", O_RDONLY|O_NONBLOCK|O_LARGEFILE|O_DIRECTORY|O_CLOEXEC) = 3
+getdents(3, /* 7 entries */, 32768)     = 120
+lstat64("Daniela/OHANA", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+lstat64("Daniela/mirca", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Daniela/va", {st_mode=S_IFREG|0644, st_size=97, ...}) = 0
+lstat64("Daniela/uy", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Daniela/como", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+getdents(3, /* 0 entries */, 32768)     = 0
+close(3)                                = 0
+fstat64(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 2), ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb76f9000
+write(1, "8\tDaniela\n", 10)            = 10
+write(4, "0 0 Daniela/OHANA \n\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 1024) = 1024
+read(5, "Prueba\n", 1024)               = 7
+open("Prueba", O_RDONLY|O_NONBLOCK|O_LARGEFILE|O_DIRECTORY|O_CLOEXEC) = 3
+getdents(3, /* 27 entries */, 32768)    = 500
+lstat64("Prueba/gustaria", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/ilusion", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/hola", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/Holanda", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+lstat64("Prueba/Trinidad", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+lstat64("Prueba/linkingson", {st_mode=S_IFLNK|0777, st_size=4, ...}) = 0
+lstat64("Prueba/Venezuela", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+lstat64("Prueba/una", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/no", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/decirte", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/estas", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/es", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/pentision", {st_mode=S_IFLNK|0777, st_size=4, ...}) = 0
+lstat64("Prueba/lo", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/llamo", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/ves", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/me", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/Mexico", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+lstat64("Prueba/mas", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/pascarella", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/jose", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/que", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/aqui", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+lstat64("Prueba/como", {st_mode=S_IFREG|0644, st_size=16176, ...}) = 0
+lstat64("Prueba/Brasil", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+getdents(3, /* 0 entries */, 32768)     = 0
+close(3)                                = 0
+write(1, "32\tPrueba\n", 10)            = 10
+write(4, "0 2 Prueba/Holanda Prueba/Trinid"..., 1024) = 1024
+read(5, "\3603n\267\3603n\267\n", 1024) = 9
+open("\3603n\267\3603n\267", O_RDONLY|O_NONBLOCK|O_LARGEFILE|O_DIRECTORY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+--- SIGSEGV (Segmentation fault) @ 0 (0) ---

@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     int c, i, j;
 
     int estado;
+    int ocupados = -1;
 
 
 
@@ -45,8 +46,12 @@ int main(int argc, char *argv[]) {
         }
     }
     salida = argv[optind];
-    if (directorio == NULL)
+    if (directorio == NULL) {
         directorio = ".";
+    } else {
+        chdir(directorio);
+    }
+
     if (salida == NULL) {
         printf("Archivo de salida no especificado\n");
         exit(1);
@@ -78,37 +83,29 @@ int main(int argc, char *argv[]) {
 
         if (pid == 0) {
             
-            int j;
-            FILE* salidaHijo;
             char buffer2[1024];
-            close(alPadre [0]);
-            for (j = 0; j<i; j++) {
-                close(aHijos[j][0]);
-                close(aHijos[j][1]);
-            }
+            close(alPadre[0]);
             close(aHijos[i][1]);
 
             int sumaHijo = 0;
             int linkH = 0;
-            char* resultado;
+            char resultado[1024];
             char listaTrabajos[2048];
             DIR* dH;
             struct dirent *dirH;
             struct stat atributosH;
-            char* directorioH;
+            char directorioH[512];
 
 
-            //entradaHijo = fdopen(aHijos[i][0], "r");
 
             while (1) {
 
                 read(aHijos[i][0], buffer2, sizeof(buffer2));
                 buffer2[strcspn(buffer2, "\n")] = 0;
-                printf("=========%s=========\n", buffer2);
-                
 
                 linkH = 0;
-                resultado = NULL;
+                resultado[0] = 0;
+                directorioH[0] = 0;
                 sumaHijo = 0;
                 dH = opendir(buffer2);
                 listaTrabajos[0] = 0;
@@ -120,7 +117,7 @@ int main(int argc, char *argv[]) {
                         continue;
                     }
 
-                    asprintf(&directorioH, "%s/%s", buffer2, dirH->d_name);
+                    sprintf(directorioH, "%s/%s", buffer2, dirH->d_name);
                     lstat(directorioH, &atributosH);
 
                     if (S_ISDIR(atributosH.st_mode)) {
@@ -134,15 +131,21 @@ int main(int argc, char *argv[]) {
                     if (S_ISREG(atributosH.st_mode)) {
                         sumaHijo += (int)atributosH.st_blocks;
                     }
+
+                    //free(directorioH);
                     
                 }
 
-                printf("%d\t%s---hijo %i\n", sumaHijo, buffer2, i);
-                asprintf(&resultado, "%d %d %s", i, linkH, listaTrabajos);
-            
-                salidaHijo = fdopen(alPadre[1], "w");
-                fprintf(salidaHijo, "%s\n", resultado);
-                fflush (salidaHijo);
+                closedir(dH);
+
+                printf("%d\t%s\n", sumaHijo, buffer2);
+                sprintf(resultado, "%d %d %s\n", i, linkH, listaTrabajos);
+                
+                write(alPadre[1], resultado, 1024);
+                //free(trabajadores);
+                //free(pidHijos);
+                //free(resultado);
+
 
             }
             exit(0);
@@ -156,11 +159,9 @@ int main(int argc, char *argv[]) {
     }
 
     
-    //close(alPadre[1]);
-
-
+    close(alPadre[1]);
     DIR *d;
-    ColaT* trabajos;
+    ColaT* trabajos = NULL;
     struct dirent *dir;
     struct stat atributos;
     int suma = 0;
@@ -187,9 +188,9 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    closedir(d);
 
     printf("%d\t%s\n", suma, directorio);
-    ImprimirColaT(trabajos);
 
     
     FILE** salidaPadre;
@@ -200,14 +201,13 @@ int main(int argc, char *argv[]) {
     }
 
 
-    while ( esVaciaColaT(trabajos) == 0 ) {
+    while ( esVaciaColaT(trabajos) == 0 || (ocupados > 0) ) {
         
         // escritura del padre
         j = 0;
         while (j < nHijos) {
             rutaActual = TopeColaT(trabajos);
             if (trabajadores[j] == 0 && rutaActual != NULL)  {
-                printf("%s %d\n", rutaActual, j);
                 DesencolarT(trabajos);
                 fprintf(salidaPadre[j], "%s\n", rutaActual);
                 fflush(salidaPadre[j]);
@@ -224,8 +224,6 @@ int main(int argc, char *argv[]) {
         read(alPadre[0], buffer, sizeof(buffer));
         buffer[strcspn(buffer, "\n")] = 0;
 
-        //printf("%s --- desde el padre\n", buffer);
-
         aux = strtok (buffer," ");
         trabajadores[atoi(aux)] = 0;
         aux = strtok (NULL," ");
@@ -234,11 +232,15 @@ int main(int argc, char *argv[]) {
             aux = strtok (NULL," ");
             if ( aux != NULL ) {
                 EncolarT(trabajos, aux);
-                //printf("%s\n", DesencolarT(trabajos));
             }
 
 
         }
+        ocupados = 0;
+        for  (i = 0; i < nHijos; i++) {
+            ocupados += trabajadores[i];
+        }
+
 
     }
 
@@ -250,13 +252,17 @@ int main(int argc, char *argv[]) {
     printf("\n");
     printf("Total de enlaces logicos: %d\n", links);
 
+    for (i = 0; i < nHijos; i++) {
+        fclose(salidaPadre[i]);
+        free(aHijos[i]);
 
+    }
 
-    
-
-
-
+    free(trabajadores);
+    free(pidHijos);
+    free(aHijos);
+    free(salidaPadre);
+    free(trabajos);
     return 0;
-
 
 }
