@@ -1,8 +1,0 @@
-close(3)                                = 0
-close(6)                                = 0
-fcntl64(5, F_GETFL)                     = 0 (flags O_RDONLY)
-fstat64(5, {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
-mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7761000
-_llseek(5, 0, 0xbfb8895c, SEEK_CUR)     = -1 ESPIPE (Illegal seek)
-read(5, 0xb7761000, 4096)               = ? ERESTARTSYS (To be restarted)
---- SIGINT (Interrupt) @ 0 (0) ---
